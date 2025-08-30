@@ -1,0 +1,17 @@
+name: Ping Supabase Edge Function
+
+on:
+  schedule:
+    # jalan tiap 5 hari sekali jam 00:00 UTC
+    - cron: "0 0 */5 * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit Edge Function
+        run: |
+          curl -f \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            https://${{ secrets.SUPABASE_PROJECT_REF }}.functions.supabase.co/ping
